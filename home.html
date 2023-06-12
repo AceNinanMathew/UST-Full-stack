@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Home</title>
+ 
+  <link rel="stylesheet" href="public/home.css">
+</head>
+<body>
+  <div id="preloader">
+    <h1 id="l1">Library Management System</h1>
+  </div>
+  <div class="home">
+    <header class="home-header">
+      <b><h1 class="Head1">Hi,</h1></b>
+      <b><h1 class="Head2">Welcome.</h1></b>
+        <div class="butt">
+            <a href="/search.html"><button class="searchb" type="button">Search for Book/Journal</button></a>
+          <br>
+          <a href="/update.html"><button class="upb" type="button" >Update Name of Book/Journal</button></a>
+          <br>
+          <form action="/reports" method="post">
+          <button class="repb" type="submit">Prepare Report</button>
+        </form>
+        </div>
+    </header>
+  </div>
+
+  <script>
+    var loader = document.getElementById("preloader");
+  
+    var displayDuration = 2000; 
+    loader.style.display = "block";
+    setTimeout(function() {
+      loader.style.display = "none";
+    }, displayDuration);
+  </script>
+ 
+</body>
+</html>

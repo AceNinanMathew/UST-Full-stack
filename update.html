@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Update</title>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script src="https://kit.fontawesome.com/edc75e8b60.js" crossorigin="anonymous"></script>
+  <link rel="stylesheet" href="public/update.css">
+  <style>
+    .message-container {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      background-color: #f8f8f8;
+      padding: 10px;
+      text-align: center;
+      display: none;
+      z-index: 9999;
+    }
+
+    .message-container.success {
+      background-color: #dff0d8;
+      color: #3c763d;
+    }
+
+    .message-container.error {
+      background-color: #f2dede;
+      color: #a94442;
+    }
+  </style>
+</head>
+<body>
+  <div>
+    <button class="go-back-button" onclick="handleGoBack()">
+      <i class='fas fa-arrow-alt-circle-left' style='font-size:30px'></i>
+      <p class="head5">Go Back</p>
+    </button>
+    <div class="coverr">
+      <h1 class="h1">Update Book/Journal</h1>
+      <form id="updateForm" action="/update" method="post">
+        <label class="chek">
+          <input type="checkbox" name="type" value="book" style="transform: scale(1.7); margin-right: 100px; margin-top: 140px;">
+          <b class="b">Book</b>
+        </label>
+        <label class="chek1">
+          <input type="checkbox" name="type" value="journal" style="transform: scale(1.7); margin-right: -70px; margin-top: -500px;">
+          <b class="j">Journal</b>
+        </label>
+        <input class="old" type="text" name="oldName" placeholder="Enter Old Name">
+        <input class="new" type="text" name="newName" placeholder="Enter New Name">
+        <button class="but" type="submit">Update</button>
+      </form>
+    </div>
+  </div>
+
+  <div id="messageContainer" class="message-container"></div>
+
+  <script>
+    $(document).ready(function() {
+      $("#updateForm").on("submit", function(event) {
+        event.preventDefault();
+
+        var formData = $(this).serialize();
+
+        $.post("/update", formData, function(response) {
+          if (response.success) {
+            displayMessage("Update successful!", "success");
+          } else {
+            displayMessage("Update failed. Please try again!", "error");
+          }
+        });
+      });
+
+      function displayMessage(message, type) {
+        var messageContainer = $("#messageContainer");
+        messageContainer.text(message);
+        messageContainer.addClass(type);
+        messageContainer.slideDown();
+
+        setTimeout(function() {
+          messageContainer.slideUp(function() {
+            messageContainer.removeClass(type);
+            messageContainer.text("");
+          });
+        }, 4000);
+      }
+    });
+
+    function handleGoBack() {
+      window.history.back();
+    }
+  </script>
+</body>
+</html>

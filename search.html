@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Search</title>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script src="https://kit.fontawesome.com/edc75e8b60.js" crossorigin="anonymous"></script>
+  <link rel="stylesheet" href="public/search.css">
+</head>
+<body>
+  <div class="container">
+    <button class="go-back-button1" onclick="handleGoBack()">
+        <path d="M5 11h14v2H5z" />
+        <path d="M19 9H7l5-5zm0 10l-5-5h12z" />
+      </svg>
+      <i class='fas fa-arrow-alt-circle-left' style='font-size:30px'></i>
+      <p class="head5">Go Back</p>
+    </button>
+    <div class="cover">
+      <h1 class="h1">Search for Book/Journal</h1>
+      <form id="searchForm" method="post">
+        <label class="chk">
+          <input type="checkbox" name="type" value="book" style="transform: scale(1.8); margin-right: 400px; margin-top: -140px;" onclick="uncheckOther(this)">
+          <b class="bk">Book</b>
+        </label>
+        <label class="chk1">
+          <input type="checkbox" name="type" value="journal" style="transform: scale(2.7); margin-right: 550px; margin-top: -33px;" onclick="uncheckOther(this)">
+          <b class="jr">Journal</b>
+        </label>
+        <input type="text" name="searchQuery" placeholder="Enter here">
+        <button class="but" type="submit">Search</button>
+      </form>
+    </div>
+    <h1 class="or">OR</h1>
+    <div class="cover1">
+      <h1 class="h1">Retrieving Book/Journal</h1>
+      <h1 class="h2">(Using Publication Date)</h1>
+      <form id="retrieveForm" method="post" action="/retrieve/result">
+        <label class="chk">
+          <input type="checkbox" name="type1" value="book" style="transform: scale(1.8); margin-right: 100px; margin-top: -158px;" onclick="uncheckOther(this)">
+          <b class="bk1">Book</b>
+        </label>
+        <label class="chk1">
+          <input type="checkbox" name="type1" value="journal" style="transform: scale(2.7); margin-right: 120px; margin-top: -38px;" onclick="uncheckOther(this)">
+          <b class="jr1">Journal</b>
+        </label>
+        <input type="date" name="publicationDate">
+        <button class="but" type="submit">Retrieve</button>
+      </form>
+    </div>
+  </div>
+
+  <script>
+    $(document).ready(function() {
+      $("#searchForm").on("submit", function(event) {
+        event.preventDefault();
+
+        var formData = $(this).serialize();
+
+        $.post("/search/result", formData, function(response) {
+          if (response.found) {
+            showAlert("Found!");
+          } else {
+            showAlert("Not found!");
+          }
+        });
+      });
+
+      function showAlert(message) {
+        var alertElement = $("<div>").addClass("alert").text(message);
+
+        $("body").append(alertElement);
+
+  
+        setTimeout(function() {
+          alertElement.remove();
+        }, 4000);
+      }
+    });
+
+    function uncheckOther(checkbox) {
+      var checkboxes = document.getElementsByName('type');
+      checkboxes.forEach(function(cb) {
+        if (cb !== checkbox) {
+          cb.checked = false;
+        }
+      });
+    }
+
+    function handleGoBack() {
+      window.history.back();
+    }
+  </script>
+</body>
+</html>
