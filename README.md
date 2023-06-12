@@ -1,6 +1,6 @@
 # UST-Full-stack
 
 #Team Members:
-Abhijeet J Kartha
-Ace Ninan Mathew
-Manikandan B Nair
+1. Abhijeet J Kartha
+2. Ace Ninan Mathew
+3. Manikandan B Nair
